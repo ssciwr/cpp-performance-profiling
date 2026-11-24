@@ -1,28 +1,25 @@
-# C++ Profiling
+# C++ Performance Profiling
 
+[![SSC Compact Course](https://img.shields.io/badge/SSC-Compact_Course-blue?style=flat&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Mi4zNDc5MzkgNDIuMzQ4MTc1Ij4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMzMuOTc4NzE5LC0zOC44NDg5MikiPgogICAgPHBhdGggZD0ibSAzMy45Nzg4OTMsNDMuODEyODU3IGMgMCwtMi43NDE0MzcgMi4yMjIzNjEsLTQuOTYzOTM3IDQuOTYzOTczLC00Ljk2MzkzNyBoIDMyLjQxOTg1NyBjIDIuNzQxNDM2LDAgNC45NjM5MzYsMi4yMjI1IDQuOTYzOTM2LDQuOTYzOTM3IHYgMzIuNDE5ODU2IGMgMCwyLjc0MTYwNiAtMi4yMjI1LDQuOTY0MTA2IC00Ljk2MzkzNiw0Ljk2NDEwNiBIIDM4Ljk0Mjg2NiBjIC0yLjc0MTYxMiwwIC00Ljk2Mzk3MywtMi4yMjI1IC00Ljk2Mzk3MywtNC45NjQxMDYgViA0My44MTI4NTciIHN0eWxlPSJmaWxsOiNmZmZmZmY7ZmlsbC1vcGFjaXR5OjE7ZmlsbC1ydWxlOm5vbnplcm87c3Ryb2tlOm5vbmUiLz4KICAgIDxwYXRoIGQ9Im0gNDkuNDM2NjMsNTcuNjUzODQ3IGMgMCwxLjc4ODU4MyAtMC42Njk0NjYsMy40MjA1NjggLTEuNzcxMzMyLDQuNjU5NDU0IC0yLjk2MDcyMywwLjY2NTAyMSAtNS44MzQ2MjgsLTAuMjc5MDgzIC03LjcyMzUwNiwtMS44NTg3MTYgLTEuOTM5OTk2LC0xLjYyMjQ5NiAtMy4wNjg3NDMsLTMuOTI2NzM1IC0zLjIzODY1NSwtNi44NjAyOTQgMS4yNzExMDcsLTEuNzg3NTk1IDMuMzU5Mzc2LC0yLjk1MzgwOCA1LjcxOTk1MywtMi45NTM4MDggMy44NzM1MzYsMCA3LjAxMzU0LDMuMTM5ODYzIDcuMDEzNTQsNy4wMTMzNjQiIHN0eWxlPSJmaWxsOiM0MGI5NDUiLz4KICAgIDxwYXRoIGQ9Im0gNjUuNzYyNzk5LDYzLjQzODg3MyBjIDIuNjg4NDEzLC0wLjMxMjgwOCA1LjQ4MjgwMiwwLjYzODE3NSA3LjQzMTU0NiwyLjgwMjkyNiAzLjE5NDc1NiwzLjU0ODczMyAyLjkwODMsOS4wMTUxMzEgLTAuNjQwMjkxLDEyLjIwOTgzIC0xLjY0MjE4MSwxLjQ3ODYzNiAtMy42OTUyMDcsMi4yMTE2MTMgLTUuNzQzODIzLDIuMjIwMjk1IC0zLjA0ODA3LC0yLjE2NDA2OSAtNC41NTIwNjgsLTUuNTczNjAzIC00LjY2MjczNCwtOC42MDU0NDYgLTAuMTEzOTQ4LC0zLjExNjU0NSAxLjA2NjYyMywtNi4wNTE5MDMgMy42MTUzMDIsLTguNjI3NjA1IiBzdHlsZT0iZmlsbDojZWUyMzI3Ii8%2BCiAgICA8cGF0aCBkPSJtIDY3Ljc0NDk1MSw1MC4xMDgyODIgYyAtMC41OTM5MzYsMS4xMTcwMzYgLTEuNTU3MTYxLDEuOTExMjA5IC0yLjY1OTMwOSwyLjMxMTkzIC0yLjA0Njk1OCwtMC41NjU1MzggLTMuNTExNzk3LC0yLjA5NDA1NCAtNC4xNjA0NSwtMy42OTE2NDQgLTAuNjY3NTI2LC0xLjY0NDgyNiAtMC42MDczMDcsLTMuNDQ0NjI4IDAuMjU1MDU4LC01LjMxODIzMSAxLjM3ODYyMSwtMC42OTYzODMgMy4wNjMyNDEsLTAuNzM0MTMgNC41MzA3MjYsMC4wNDY1NyAyLjM5ODIxOCwxLjI3NTY0NCAzLjMwODgwOCw0LjI1MzQ0MiAyLjAzMzk3NSw2LjY1MTM3OCIgc3R5bGU9ImZpbGw6I2JkMjI5OCIvPgogICAgPHBhdGggZD0ibSA1OC43NDExNDUsNTMuMzU0MjYxIGMgLTMuMDY4NjM4LC0yLjU3NDMyNSAtMy40NjkyMTcsLTcuMTQ4NTEzIC0wLjg5NDc1MSwtMTAuMjE2OTc0IDIuNTc0NDMyLC0zLjA2ODQ2MSA3LjE0ODk3MiwtMy40Njg1MTEgMTAuMjE3NTc0LC0wLjg5NDI5MiAzLjA2ODc0NCwyLjU3NDU3MyAzLjQ2OTE0Nyw3LjE0ODU0OSAwLjg5NDc4NiwxMC4yMTY5MDQgLTIuNTc0NDY3LDMuMDY4MzU2IC03LjE0OTAwNywzLjQ2ODY1MyAtMTAuMjE3NjA5LDAuODk0MzYyIHogTSAzMy45Nzg4OTMsNDMuODEyODU3IGMgMCwtMi43NDE0MzcgMi4yMjIzNjEsLTQuOTYzOTM3IDQuOTYzOTczLC00Ljk2MzkzNyBoIDMyLjQxOTg1NyBjIDIuNzQxNDM2LDAgNC45NjM5MzYsMi4yMjI1IDQuOTYzOTM2LDQuOTYzOTM3IGwgLTAuMDAxOCwyMC4wNDU2MSBjIC0yLjMwNTA1LC0yLjY4Nzg0OSAtNS43MzA1MjIsLTQuMzk2NjM0IC05LjU1NTE2MywtNC4zOTY2MzQgLTYuOTM5MjQ1LDAgLTEyLjU2NDM5Myw1LjYyNTI4OSAtMTIuNTY0MzkzLDEyLjU2NDU2OSAwLDMuNjE3NTk2IDEuNTI4OTA0LDYuODc4MTg3IDMuOTc1NzcxLDkuMTcwNjkyIEwgMzguOTQyODMsODEuMTk2ODE5IGMgLTIuNzQxNjEyLDAgLTQuOTYzOTczLC0yLjIyMjUgLTQuOTYzOTczLC00Ljk2NDEwNiBsIC0xLjM4ZS00LC0xMi41NTUwNDQgYyAwLjUwMDIyNywwLjcwMjM4IDEuMDk2NzgxLDEuMzUzNTM4IDEuNzg4MTQxLDEuOTMzNTQgNC4zODcxMjcsMy42ODA3NDIgMTAuOTI3NDE2LDMuMTA4MTQ4IDE0LjYwODI5OSwtMS4yNzg4MiAzLjY4MTAyNSwtNC4zODcxMDkgMy4xMDg1NzMsLTEwLjkyNzI5MiAtMS4yNzg1MzcsLTE0LjYwODAzNSAtNC4zODcxMDksLTMuNjgwODgzIC0xMC45Mjc0MzMsLTMuMTA4MTQ5IC0xNC42MDg0NDQsMS4yNzg4MiAtMC4xNzk5NjksMC4yMTQ1NTkgLTAuMzQ5NzQ0LDAuNDM0MjM0IC0wLjUwOTQ1OSwwLjY1ODQyNCBsIDEuMzhlLTQsLTcuODQ4NzQxIiBzdHlsZT0iZmlsbDojM2E5ZWJmO2ZpbGwtcnVsZTpldmVub2RkIi8%2BCiAgPC9nPgo8L3N2Zz4K&labelColor=%23ffffff&color=%233a9ebf)](https://www.ssc.uni-heidelberg.de/en/learning)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/ssciwr/cpp-benchmarking/ci.yml?branch=main)](https://github.com/ssciwr/cpp-benchmarking/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/ssciwr/cpp-profiling/branch/main/graph/badge.svg)](https://codecov.io/gh/ssciwr/cpp-benchmarking)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/ssciwr/cpp-performance-profiling/ci.yml?branch=main)](https://github.com/ssciwr/cpp-performance-profiling/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/ssciwr/cpp-performance-profiling/branch/main/graph/badge.svg)](https://codecov.io/gh/ssciwr/cpp-performance-profiling)
 
-We use compiled languages like C++, Rust or Fortran to get good performance, so measuring and understanding
-the performance characteristics of our code is vital, for example to identify bottlenecks or to determine if a
-change to the code actually improves the performance. In this course we will cover different ways to profile
-and benchmark the performance of our code, and discuss the pros and cons of each method.
-Code examples will be in C++ but the profiling applies to most compiled languages.
+> We use compiled languages like C++, Rust or Fortran to get good performance, so measuring and understanding the performance characteristics of our code is vital, for example to identify bottlenecks or to determine if a change to the code actually improves the performance. In this course we will cover different ways to profile and benchmark the performance of our code, and discuss the pros and cons of each method. Code examples will be in C++ but the profiling applies to most compiled languages.
 
 ## Slides
 
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSfJG2SPALpfAuDUZ9skpvYSEkqCMYGZIY3scXCpHttpSpjZ_fr225hVFOLCN2Y4wqN94mwuhPipez5/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+[![Course slides](https://ssciwr.github.io/cpp-performance-profiling/slides-thumb.png)](https://ssciwr.github.io/cpp-performance-profiling)
 
-[download slides as pdf](https://github.com/ssciwr/cpp-benchmarking/raw/main/slides/slides.pdf) | [download course description as pdf](https://ssc.iwr.uni-heidelberg.de/sites/default/files/ssc-benchmarking.pdf)
+[Download as PDF](https://ssciwr.github.io/cpp-performance-profiling/slides.pdf)
 
 ## Getting started
 
 To clone the repo and compile the code:
 
 ```
-git clone --recursive https://github.com/ssciwr/cpp-benchmarking.git
-cd cpp-benchmarking
+git clone --recursive https://github.com/ssciwr/cpp-performance-profiling.git
+cd cpp-performance-profiling
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release ..
@@ -30,13 +27,13 @@ cmake --build .
 ```
 
 This code contains two very simple map implementations,
-[vec_map](https://github.com/ssciwr/cpp-benchmarking/blob/main/include/cppbench/vec_map.hpp) and [sorted_vec_map](https://github.com/ssciwr/cpp-benchmarking/blob/main/include/cppbench/sorted_vec_map.hpp),
+[vec_map](include/cppbench/vec_map.hpp) and [sorted_vec_map](include/cppbench/sorted_vec_map.hpp),
 along with benchmarks of these and other map implementations.
 
 ## Micro-benchmarks
 
-- [bench](https://github.com/ssciwr/cpp-benchmarking/blob/main/bench) contains some micro-benchmarks using the [Google Benchmark](https://github.com/google/benchmark) library
-- [plots](https://github.com/ssciwr/cpp-benchmarking/blob/main/plots) contains some sample output & plots of these benchmarks and a simple Python script to make the plots
+- [bench](bench) contains some micro-benchmarks using the [Google Benchmark](https://github.com/google/benchmark) library
+- [plots](plots) contains some sample output & plots of these benchmarks and a simple Python script to make the plots
 
 ![plots/bench5.png](plots/bench5.png)
 

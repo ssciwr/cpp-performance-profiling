@@ -1,0 +1,46 @@
+name: Slides
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+      - run: npm install --global @marp-team/marp-cli qrcode
+      - name: Generate QR code
+        shell: bash
+        run: |
+          slides_url="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+          qrcode --error Q --qzone 4 \
+            --darkcolor 3a9ebfff --lightcolor 1f2a30ff \
+            --output slides/qr.svg "${slides_url}"
+      - run: marp slides/index.md -o slides/index.html
+      - run: marp slides/index.md --pdf -o slides/slides.pdf
+      - run: marp slides/index.md --image png -o slides/slides-thumb.png
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./slides
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

@@ -169,3 +169,9 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# Marp build outputs (generated in CI; locally with `marp slides -w`)
+slides/*.html
+slides/slides.pdf
+slides/slides-thumb.png
+slides/qr.svg
